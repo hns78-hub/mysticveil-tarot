@@ -1,0 +1,939 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>MysticVeil · Tarot Readings by Jalpa</title>
+<meta name="description" content="Ask your question, draw four Rider-Waite tarot cards, and receive a personal reading from Jalpa within 48 hours."/>
+<meta name="theme-color" content="#08061A"/>
+<meta property="og:title" content="MysticVeil · Tarot Readings by Jalpa"/>
+<meta property="og:description" content="Ask your question, draw four cards, and receive a personal reading from Jalpa."/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2308061A' stroke='%23C9A84C' stroke-width='2'/%3E%3Cpath d='M38 14a18 18 0 1 0 0 36a14 14 0 1 1 0-36z' fill='%23E8C97A'/%3E%3C/svg%3E"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="preload" as="image" href="assets/card-back-sm.jpg"/>
+<style>
+:root{
+  --bg:#08061A;--bg2:#0E0B2C;--bg3:#151138;
+  --gold:#C9A84C;--goldl:#E8C97A;--goldd:#8B6F2E;--cream:#FFF8EC;
+  --vi:#7B2FBE;--lav:#C9BCFF;
+  --tx:#EEE8F7;--mt:#B4A9D6;--mt2:#8E83B3;
+  --bd:rgba(201,168,76,.28);--bd2:rgba(201,168,76,.5);
+  --glass:linear-gradient(160deg,rgba(255,255,255,.075),rgba(201,168,76,.03));
+  --fh:'Cinzel Decorative','Cinzel',serif;--fs:'Cinzel',serif;--fb:'Raleway',system-ui,sans-serif;--fq:'Cormorant Garamond',Georgia,serif;
+  --ease:cubic-bezier(.25,.46,.45,.94);--spring:cubic-bezier(.175,.885,.32,1.275);
+  --cw:84px;--ch:146px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{overflow-x:hidden;-webkit-text-size-adjust:100%;}
+body{background:var(--bg);padding-top:env(safe-area-inset-top, 0px);padding-bottom:env(safe-area-inset-bottom, 0px);color:var(--tx);font-family:var(--fb);overflow-x:hidden;min-height:100vh;min-height:100dvh;
+  background-image:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(123,47,190,.22),transparent 60%),radial-gradient(ellipse 60% 50% at 100% 110%,rgba(201,168,76,.08),transparent 60%);background-attachment:fixed;}
+::selection{background:rgba(201,168,76,.35);color:var(--cream);}
+::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--goldd);border-radius:3px;}
+h1,h2,h3{font-family:var(--fh);color:var(--goldl);line-height:1.15;letter-spacing:.04em;font-weight:400;}
+h2{font-size:clamp(1.6rem,3.4vw,2.4rem);}
+p{color:var(--mt);line-height:1.7;}
+:focus-visible{outline:2px solid var(--goldl);outline-offset:3px;}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+#cv{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+#app{position:relative;z-index:1;}
+
+/* ---------- top bar ---------- */
+.pb{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--vi),var(--gold),var(--goldl));z-index:120;transition:width .7s var(--ease);box-shadow:0 0 12px rgba(201,168,76,.6);}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:110;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:calc(env(safe-area-inset-top, 0px) + 14px) clamp(16px,4vw,32px) 14px;background:linear-gradient(180deg,rgba(8,6,26,.92),rgba(8,6,26,.6) 70%,transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+.tb-brand{display:flex;align-items:center;gap:10px;font-family:var(--fh);font-size:1rem;color:var(--goldl);letter-spacing:.06em;transition:opacity .5s ease;}
+.tb-brand svg{width:22px;height:22px;}
+body[data-step="s1"] .tb-brand{opacity:0;pointer-events:none;}
+.stepper{display:flex;align-items:center;gap:6px;list-style:none;}
+.stepper li{display:flex;align-items:center;gap:8px;font-family:var(--fs);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mt2);transition:color .4s ease;}
+.stepper li+li::before{content:'';width:18px;height:1px;background:var(--bd);margin-right:2px;}
+.stepper .n{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:.66rem;border:1px solid var(--bd);transition:all .4s ease;letter-spacing:0;}
+.stepper li.on{color:var(--goldl);}
+.stepper li.on .n{background:var(--gold);color:var(--bg);border-color:var(--gold);box-shadow:0 0 14px rgba(201,168,76,.6);}
+.stepper li.dn{color:var(--mt);}
+.stepper li.dn .n{background:rgba(201,168,76,.15);border-color:var(--goldd);color:var(--goldl);}
+
+/* ---------- shared ---------- */
+.step{display:none;min-height:100vh;min-height:100dvh;position:relative;padding-top:76px;}
+.step.active{display:flex;flex-direction:column;animation:stepIn .6s var(--ease) both;}
+.eyebrow{font-family:var(--fs);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--fs);font-size:.85rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:16px 40px;min-height:52px;border-radius:999px;border:none;cursor:pointer;transition:transform .35s var(--ease),box-shadow .35s var(--ease),background .35s ease,opacity .3s ease,border-color .3s ease;text-decoration:none;}
+.btnp{background:linear-gradient(120deg,#8B6F2E,#C9A84C 30%,#F1D893 50%,#C9A84C 70%,#8B6F2E);background-size:220% 100%;color:#160F05;box-shadow:0 8px 30px rgba(201,168,76,.25),inset 0 1px 0 rgba(255,255,255,.4);animation:bsh 5s ease infinite;}
+.btnp:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 14px 44px rgba(201,168,76,.45),inset 0 1px 0 rgba(255,255,255,.4);}
+.btnp:active:not(:disabled){transform:translateY(0);}
+.btnp:disabled{opacity:.35;cursor:not-allowed;animation:none;box-shadow:none;filter:saturate(.6);}
+.btng{background:rgba(201,168,76,.04);color:var(--goldl);border:1px solid var(--bd);}
+.btng:hover{background:rgba(201,168,76,.1);border-color:var(--gold);}
+.btn-sm{padding:11px 22px;min-height:44px;font-size:.72rem;}
+.spin{width:16px;height:16px;border:2px solid rgba(0,0,0,.2);border-top-color:currentColor;border-radius:50%;animation:rot .7s linear infinite;display:inline-block;}
+.glass{background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--bd);border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.06);}
+.qecho{display:inline-flex;align-items:baseline;gap:8px;max-width:100%;font-family:var(--fq);font-style:italic;font-size:1.15rem;color:var(--tx);padding:8px 20px;border-radius:999px;background:rgba(201,168,76,.06);border:1px solid var(--bd);}
+.qecho span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.qecho::before{content:'\201C';color:var(--gold);font-size:1.5rem;line-height:0;}
+.qecho::after{content:'\201D';color:var(--gold);font-size:1.5rem;line-height:0;}
+.tst{position:fixed;bottom:calc(env(safe-area-inset-bottom, 0px) + 28px);left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg3);border:1px solid var(--bd2);border-radius:999px;padding:12px 24px;font-family:var(--fs);font-size:.8rem;letter-spacing:.08em;color:var(--goldl);z-index:9999;opacity:0;transition:all .4s ease;pointer-events:none;box-shadow:0 10px 40px rgba(0,0,0,.5);max-width:calc(100vw - 32px);text-align:center;}
+.tst.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ---------- S1 ---------- */
+#s1{align-items:center;padding:96px 16px 48px;}
+.hc{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:700px;width:100%;margin:auto;}
+.hc>*{animation:fadeUp .8s var(--ease) both;}
+.hc>*:nth-child(2){animation-delay:.08s}.hc>*:nth-child(3){animation-delay:.16s}.hc>*:nth-child(4){animation-delay:.24s}.hc>*:nth-child(5){animation-delay:.32s}.hc>*:nth-child(6){animation-delay:.4s}
+.sigil{width:84px;height:84px;margin-bottom:14px;filter:drop-shadow(0 0 24px rgba(201,168,76,.45));}
+.sigil svg{width:100%;height:100%;animation:float 6s ease-in-out infinite;}
+.sigil .orbit{transform-origin:50px 50px;animation:rot 60s linear infinite;}
+.bname{font-family:var(--fh);font-weight:700;font-size:clamp(2.4rem,7vw,4.2rem);background:linear-gradient(110deg,#8B6F2E,#E8C97A 25%,#FFF8EC 45%,#E8C97A 60%,#8B6F2E 90%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 7s linear infinite;letter-spacing:.06em;margin-bottom:6px;}
+.btag{margin-bottom:22px;}
+.lede{font-family:var(--fq);font-size:clamp(1.2rem,2.6vw,1.45rem);line-height:1.55;color:var(--tx);max-width:540px;margin-bottom:34px;}
+.lede em{color:var(--goldl);}
+.qcard{padding:30px clamp(18px,4vw,40px) 30px;width:100%;text-align:left;}
+.qlbl{font-family:var(--fs);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--goldl);display:block;margin-bottom:14px;text-align:center;}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:16px;}
+.chip{font-family:var(--fb);font-size:.82rem;font-weight:500;color:var(--mt);background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:999px;padding:8px 14px;min-height:36px;cursor:pointer;transition:all .3s ease;}
+.chip:hover,.chip[aria-pressed="true"]{color:var(--goldl);border-color:var(--gold);background:rgba(201,168,76,.1);}
+.qtxt{background:rgba(5,3,18,.55);border:1px solid var(--bd);border-radius:16px;color:var(--tx);font-family:var(--fq);font-size:1.3rem;line-height:1.5;padding:18px 22px;width:100%;resize:none;outline:none;transition:border-color .3s ease,box-shadow .3s ease,background .3s ease;height:130px;display:block;}
+.qtxt::placeholder{color:var(--mt2);font-style:italic;}
+.qtxt:focus{border-color:var(--gold);background:rgba(201,168,76,.04);box-shadow:0 0 0 4px rgba(201,168,76,.12);}
+.cntrow{display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:12px;}
+.qhint{font-size:.8rem;color:var(--mt2);}
+.cnt{font-family:var(--fs);font-size:.72rem;color:var(--mt2);font-variant-numeric:tabular-nums;}
+.btnrow{margin-top:24px;display:flex;justify-content:center;}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;width:100%;margin-top:40px;list-style:none;}
+.how li{padding:18px 14px;border-radius:16px;border:1px solid rgba(201,168,76,.14);background:rgba(255,255,255,.02);}
+.how .hn{font-family:var(--fh);font-size:1.3rem;color:var(--gold);display:block;margin-bottom:4px;}
+.how b{display:block;font-family:var(--fs);font-weight:600;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--tx);margin-bottom:4px;}
+.how span:last-child{font-size:.86rem;color:var(--mt);line-height:1.5;}
+.foot{margin-top:32px;font-family:var(--fs);font-size:.68rem;letter-spacing:.2em;color:var(--mt2);}
+
+/* ---------- S2 ---------- */
+#s2{align-items:center;overflow:hidden;padding-bottom:16px;}
+.s2hd{text-align:center;padding:10px 16px 0;z-index:10;position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;max-width:100%;}
+.s2hd p{font-size:.95rem;}
+.s2hd strong{color:var(--goldl);font-weight:600;}
+.chosen-tray{display:flex;justify-content:center;gap:clamp(10px,2.4vw,20px);margin:18px auto 30px;z-index:20;position:relative;perspective:800px;}
+.tray-slot{width:var(--cw);height:var(--ch);border:1px dashed rgba(201,168,76,.4);border-radius:9px;position:relative;display:flex;align-items:center;justify-content:center;background:rgba(13,11,43,.5);transition:all .5s var(--spring);}
+.tray-slot .rn{font-family:var(--fh);font-size:1.1rem;color:rgba(201,168,76,.4);}
+.tray-slot.next{border-color:var(--gold);border-style:solid;box-shadow:0 0 0 4px rgba(201,168,76,.08),0 0 24px rgba(201,168,76,.25);}
+.tray-slot.next .rn{color:var(--gold);}
+.tray-slot.has-card{border:1px solid var(--gold);border-style:solid;box-shadow:0 0 22px rgba(201,168,76,.4);background:transparent;}
+.slot-pos{font-family:var(--fs);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mt);position:absolute;bottom:-22px;text-align:center;width:100%;}
+.tray-slot.has-card .slot-pos{color:var(--goldl);}
+.tray-card{position:absolute;inset:0;border-radius:9px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,.6);animation:trayPop .6s var(--spring) both;background:#1a1035;}
+.tray-card img{width:100%;height:100%;object-fit:cover;display:block;}
+.inv{transform:rotate(180deg);}
+.stage{flex:1;display:flex;align-items:center;justify-content:center;position:relative;width:100%;perspective:1000px;perspective-origin:50% -40%;cursor:grab;user-select:none;-webkit-user-select:none;min-height:240px;overflow:hidden;touch-action:pan-y;}
+.stage.drag{cursor:grabbing;}
+.stage::after{content:'';position:absolute;left:50%;bottom:8%;width:min(80vw,760px);height:60px;transform:translateX(-50%);background:radial-gradient(ellipse at center,rgba(201,168,76,.18),transparent 70%);pointer-events:none;filter:blur(8px);}
+.ring{position:relative;width:0;height:0;transform-style:preserve-3d;}
+.ring-card{position:absolute;left:0;top:0;width:var(--cw);height:var(--ch);margin-left:calc(var(--cw) / -2);margin-top:calc(var(--ch) / -2);transform-style:preserve-3d;cursor:pointer;}
+.rc-flip{width:100%;height:100%;border-radius:7px;overflow:hidden;border:1px solid rgba(201,168,76,.5);box-shadow:0 6px 18px rgba(0,0,0,.55);background:#100b27 url('assets/card-back-sm.jpg') center/cover no-repeat;transition:transform .45s var(--ease),opacity .45s ease,box-shadow .3s ease;}
+.ring-card.front{z-index:2;}
+.ring-card.front .rc-flip{transform:translateZ(26px);border-color:var(--goldl);box-shadow:0 10px 26px rgba(0,0,0,.7),0 0 20px rgba(201,168,76,.45);}
+.ring-card:hover .rc-flip{transform:translateZ(26px) translateY(-14px);box-shadow:0 14px 30px rgba(0,0,0,.6),0 0 22px rgba(201,168,76,.5);}
+.ring-card.picked{pointer-events:none;}
+.ring-card.picked .rc-flip{transform:translateY(-140px) scale(.6);opacity:0;}
+.front-ring{position:absolute;left:50%;top:50%;width:calc(var(--cw) + 16px);height:calc(var(--ch) + 16px);transform:translate(-50%,-50%);border-radius:11px;border:1px solid rgba(232,201,122,.8);pointer-events:none;z-index:5;animation:glow 2.6s ease-in-out infinite;}
+.front-ring::before,.front-ring::after{content:'\2726';position:absolute;left:50%;transform:translateX(-50%);color:var(--goldl);font-size:.8rem;}
+.front-ring::before{top:-20px;}.front-ring::after{bottom:-20px;}
+.rotctrl{display:flex;align-items:center;justify-content:center;gap:14px;padding:14px 16px 4px;z-index:10;position:relative;}
+.rbtn{width:52px;height:52px;border-radius:50%;background:rgba(201,168,76,.08);border:1px solid var(--bd);color:var(--goldl);cursor:pointer;display:grid;place-items:center;transition:all .3s ease;}
+.rbtn svg{width:20px;height:20px;}
+.rbtn:hover{background:rgba(201,168,76,.18);border-color:var(--gold);}
+.rhint{font-size:.82rem;color:var(--mt2);text-align:center;padding:10px 16px 0;}
+#s2.showcase-mode .stage,#s2.showcase-mode .rotctrl,#s2.showcase-mode .rhint,#s2.showcase-mode .s2hd{opacity:0;transform:scale(.9);pointer-events:none;transition:all .7s var(--ease);}
+#s2.showcase-mode #chosenTray{transform:translateY(16vh) scale(1.3);transition:transform .9s var(--spring);}
+#s2.showcase-mode .tray-slot{box-shadow:0 0 35px rgba(201,168,76,.7),0 12px 35px rgba(0,0,0,.85);}
+
+/* ---------- S3 ---------- */
+#s3{padding:96px 16px 80px;align-items:center;}
+.s3in{max-width:940px;width:100%;margin:0 auto;}
+.s3hd{text-align:center;margin-bottom:34px;display:flex;flex-direction:column;align-items:center;gap:10px;animation:fadeDown .6s ease both;}
+.selrow{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,2.4vw,24px);margin-bottom:44px;}
+.selcol{display:flex;flex-direction:column;align-items:center;gap:6px;animation:fadeUp .7s var(--ease) both;text-align:center;}
+.selps{font-family:var(--fs);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.selimg{width:100%;border-radius:12px;overflow:hidden;border:1px solid var(--gold);box-shadow:0 0 0 4px rgba(201,168,76,.08),0 18px 40px rgba(0,0,0,.55);aspect-ratio:4/7;background:#1a1035;transition:transform .4s var(--ease),box-shadow .4s var(--ease);}
+.selimg:hover{transform:translateY(-6px);box-shadow:0 0 0 4px rgba(201,168,76,.18),0 24px 50px rgba(0,0,0,.6),0 0 30px rgba(201,168,76,.3);}
+.selimg img{width:100%;height:100%;object-fit:cover;display:block;}
+.selnm{font-family:var(--fq);font-size:1.15rem;font-weight:500;color:var(--tx);line-height:1.25;margin-top:6px;}
+.rev{display:inline-block;font-family:var(--fs);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--lav);border:1px solid rgba(201,188,255,.35);border-radius:999px;padding:3px 9px;}
+.form{padding:34px clamp(18px,4vw,40px);animation:fadeUp .7s var(--ease) .3s both;}
+.form h3{font-family:var(--fs);font-size:1.05rem;letter-spacing:.12em;text-transform:uppercase;color:var(--goldl);text-align:center;margin-bottom:6px;font-weight:600;}
+.form .fsub{text-align:center;font-size:.92rem;margin-bottom:24px;}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.fwide{grid-column:1/-1;}
+.flbl{font-family:var(--fs);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--goldl);display:block;margin-bottom:8px;}
+.flbl .opt{color:var(--mt2);text-transform:none;letter-spacing:.02em;font-family:var(--fb);}
+.finp,.ftxt{background:rgba(5,3,18,.55);border:1px solid var(--bd);border-radius:12px;color:var(--tx);font-family:var(--fb);font-size:1rem;padding:14px 16px;min-height:50px;width:100%;outline:none;transition:border-color .3s ease,box-shadow .3s ease,background .3s ease;}
+.finp::placeholder,.ftxt::placeholder{color:var(--mt2);}
+.finp:focus,.ftxt:focus{border-color:var(--gold);background:rgba(201,168,76,.04);box-shadow:0 0 0 4px rgba(201,168,76,.12);}
+.finp[aria-invalid="true"]{border-color:#E58A9B;box-shadow:0 0 0 4px rgba(229,138,155,.12);}
+.ferr{font-size:.8rem;color:#F0A3B1;margin-top:6px;min-height:0;}
+.ftxt{resize:vertical;min-height:110px;}
+.fsubrow{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:28px;}
+.linkbtn{background:none;border:none;color:var(--mt);font-family:var(--fb);font-size:.88rem;cursor:pointer;text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--bd2);padding:8px;}
+.linkbtn:hover{color:var(--goldl);}
+.privacy{font-size:.8rem;color:var(--mt2);text-align:center;}
+.senderr{max-width:460px;text-align:center;font-size:.9rem;line-height:1.6;color:#F6C9D1;background:rgba(229,138,155,.08);border:1px solid rgba(229,138,155,.35);border-radius:14px;padding:12px 18px;}
+.senderr[hidden]{display:none;}
+.senderr a{color:var(--goldl);text-underline-offset:3px;}
+
+/* ---------- S4 ---------- */
+#s4{align-items:center;justify-content:center;padding:96px 16px 60px;text-align:center;}
+.confbox{max-width:560px;width:100%;margin:auto;animation:fadeUp .8s var(--ease) both;display:flex;flex-direction:column;align-items:center;}
+.confbox .sigil{width:96px;height:96px;margin-bottom:22px;}
+.confbox h2{margin-bottom:14px;}
+.confmsg{font-size:1rem;margin-bottom:22px;}
+.confmsg strong{color:var(--goldl);font-weight:600;}
+.emailbadge{display:inline-flex;align-items:center;gap:10px;background:rgba(201,168,76,.08);border:1px solid var(--bd2);border-radius:999px;padding:11px 22px;font-size:.95rem;color:var(--goldl);margin-bottom:30px;max-width:100%;word-break:break-all;}
+.confspread{display:flex;justify-content:center;gap:10px;margin-bottom:30px;}
+.confspread figure{width:62px;display:flex;flex-direction:column;gap:6px;align-items:center;}
+.confspread .ci{width:62px;aspect-ratio:4/7;border-radius:7px;overflow:hidden;border:1px solid var(--bd2);box-shadow:0 8px 20px rgba(0,0,0,.5);}
+.confspread img{width:100%;height:100%;object-fit:cover;display:block;}
+.confspread figcaption{font-family:var(--fs);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mt);}
+.confnote{font-size:.88rem;color:var(--mt2);margin-bottom:28px;}
+
+/* ---------- keyframes ---------- */
+@keyframes bsh{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
+@keyframes glow{0%,100%{box-shadow:0 0 18px rgba(201,168,76,.25);}50%{box-shadow:0 0 36px rgba(201,168,76,.55),0 0 70px rgba(201,168,76,.18);}}
+@keyframes rot{to{transform:rotate(360deg);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes stepIn{from{opacity:0;}to{opacity:1;}}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+@keyframes shimmer{0%{background-position:200% center;}100%{background-position:-200% center;}}
+@keyframes sprkl{0%{transform:translate(0,0) rotate(0deg) scale(1);opacity:1;}100%{transform:translate(var(--sx),var(--sy)) rotate(var(--sr)) scale(0);opacity:0;}}
+@keyframes conffall{0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(-120px) rotate(720deg);opacity:0;}}
+@keyframes trayPop{0%{transform:scale(.3) translateY(60px) rotateY(180deg);opacity:0;}70%{transform:scale(1.08) translateY(-4px) rotateY(0deg);opacity:1;}100%{transform:none;opacity:1;}}
+
+/* ---------- responsive ---------- */
+@media(max-width:768px){
+  :root{--cw:66px;--ch:115px;}
+  .stepper .l{display:none;}
+  .stepper li.on .l{display:inline;}
+  .stepper li+li::before{width:10px;}
+  .selrow{grid-template-columns:repeat(2,1fr);max-width:420px;margin-left:auto;margin-right:auto;}
+  .fgrid{grid-template-columns:1fr;}
+  .how{grid-template-columns:1fr;gap:10px;margin-top:30px;}
+  .how li{display:grid;grid-template-columns:36px 1fr;column-gap:10px;text-align:left;padding:14px 16px;}
+  .how .hn{grid-row:span 2;margin:0;}
+  #s2.showcase-mode #chosenTray{transform:translateY(14vh) scale(1.12);}
+}
+@media(max-width:480px){
+  .tb-brand span{display:none;}
+  .btn{padding:15px 28px;width:100%;}
+  .rotctrl .btn{width:auto;}
+  .qtxt{font-size:1.2rem;height:120px;}
+  .chip{font-size:.78rem;padding:7px 12px;}
+  .qhint{display:none;}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}
+}
+</style>
+</head><body data-step="s1">
+<canvas id="cv" aria-hidden="true"></canvas>
+<div class="pb" id="pb" style="width:5%"></div>
+
+<header class="topbar">
+  <div class="tb-brand" aria-hidden="true">
+    <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="none" stroke="#C9A84C" stroke-width="2"/><path d="M38 14a18 18 0 1 0 0 36a14 14 0 1 1 0-36z" fill="#E8C97A"/></svg>
+    <span>MysticVeil</span>
+  </div>
+  <ol class="stepper" aria-label="Reading progress">
+    <li class="on" id="d1"><span class="n">1</span><span class="l">Ask</span></li>
+    <li id="d2"><span class="n">2</span><span class="l">Draw</span></li>
+    <li id="d3"><span class="n">3</span><span class="l">Details</span></li>
+    <li id="d4"><span class="n">4</span><span class="l">Sent</span></li>
+  </ol>
+</header>
+
+<div class="tst" id="tst" role="status" aria-live="polite"></div>
+
+<main id="app">
+
+<!-- STEP 1 · ASK -->
+<section class="step active" id="s1" aria-labelledby="h1brand">
+  <div class="hc">
+    <div class="sigil" aria-hidden="true">
+      <svg viewBox="0 0 100 100">
+        <defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF3D0"/><stop offset=".5" stop-color="#E8C97A"/><stop offset="1" stop-color="#8B6F2E"/></linearGradient></defs>
+        <g class="orbit" fill="none" stroke="#C9A84C" stroke-opacity=".55">
+          <circle cx="50" cy="50" r="46" stroke-dasharray="2 5"/>
+          <circle cx="50" cy="50" r="38"/>
+          <path d="M50 2v8M50 90v8M2 50h8M90 50h8" stroke-opacity=".8"/>
+        </g>
+        <path d="M58 26a25 25 0 1 0 0 48a19 19 0 1 1 0-48z" fill="url(#gg)"/>
+        <path d="M66 40l2.2 5.8 5.8 2.2-5.8 2.2L66 56l-2.2-5.8-5.8-2.2 5.8-2.2z" fill="#FFF3D0"/>
+      </svg>
+    </div>
+    <h1 class="bname" id="h1brand">MysticVeil</h1>
+    <p class="eyebrow btag">Tarot readings by Jalpa</p>
+    <p class="lede">Hold a question in your heart, draw four cards, and Jalpa will read what they reveal for you, <em>personally</em>.</p>
+    <div class="qcard glass">
+      <label class="qlbl" for="qinp">What would you like the cards to answer?</label>
+      <div class="chips" role="group" aria-label="Question ideas">
+        <button type="button" class="chip" data-q="In love, what do I need to know about ">Love</button>
+        <button type="button" class="chip" data-q="What path is opening for my career and ">Career</button>
+        <button type="button" class="chip" data-q="What is holding me back from ">Growth</button>
+        <button type="button" class="chip" data-q="Should I choose ">A decision</button>
+      </div>
+      <textarea class="qtxt" id="qinp" placeholder="Ask the universe... what does your heart seek to know?" maxlength="500" aria-describedby="qhint"></textarea>
+      <div class="cntrow"><span class="qhint" id="qhint">Open questions work best: &ldquo;What&hellip;&rdquo; or &ldquo;How&hellip;&rdquo;</span><span class="cnt" id="cntEl">0 / 500</span></div>
+      <div class="btnrow"><button class="btn btnp" id="btnReveal" disabled>Draw My Cards &nbsp;&#x2726;</button></div>
+    </div>
+    <ol class="how" aria-label="How it works">
+      <li><span class="hn">I</span><b>Ask</b><span>Write the question on your mind.</span></li>
+      <li><span class="hn">II</span><b>Draw</b><span>Choose four cards from the wheel.</span></li>
+      <li><span class="hn">III</span><b>Receive</b><span>Jalpa emails your reading within 48 hours.</span></li>
+    </ol>
+    <p class="foot">&#x2726;&nbsp; Rider-Waite Tarot &nbsp;&middot;&nbsp; 78 Cards &nbsp;&middot;&nbsp; Est. 1909 &nbsp;&#x2726;</p>
+  </div>
+</section>
+
+<!-- STEP 2 · DRAW -->
+<section class="step" id="s2" aria-labelledby="h2draw">
+  <div class="s2hd">
+    <h2 id="h2draw">Draw Your Cards</h2>
+    <div class="qecho"><span id="qEcho2"></span></div>
+    <p>Let intuition guide you. Choose <strong>four cards</strong> that call to you.</p>
+  </div>
+  <div class="chosen-tray" id="chosenTray" aria-label="Your spread">
+    <div class="tray-slot" id="slot0"></div>
+    <div class="tray-slot" id="slot1"></div>
+    <div class="tray-slot" id="slot2"></div>
+    <div class="tray-slot" id="slot3"></div>
+  </div>
+  <div class="stage" id="stage">
+    <div class="front-ring" aria-hidden="true"></div>
+    <div class="ring" id="ring"></div>
+  </div>
+  <div class="rotctrl">
+    <button class="rbtn" id="rotL" aria-label="Spin left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="btn btng btn-sm" id="btnDraw">Draw this card</button>
+    <button class="rbtn" id="rotR" aria-label="Spin right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+  </div>
+  <p class="rhint" id="selCount" aria-live="polite">Drag or swipe to spin the wheel, then tap a card.</p>
+</section>
+
+<!-- STEP 3 · DETAILS -->
+<section class="step" id="s3" aria-labelledby="h2read">
+  <div class="s3in">
+    <div class="s3hd">
+      <p class="eyebrow">Your spread</p>
+      <h2 id="h2read">The Cards Have Spoken</h2>
+      <div class="qecho"><span id="qEcho3"></span></div>
+    </div>
+    <div class="selrow" id="selrow"></div>
+    <form class="form glass" id="rform" novalidate>
+      <h3>Where should Jalpa send your reading?</h3>
+      <p class="fsub">Jalpa will interpret these four cards in light of your question.</p>
+      <input type="text" id="ihoney" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0"/>
+      <div class="fgrid">
+        <div>
+          <label class="flbl" for="iname">Your Name</label>
+          <input class="finp" type="text" id="iname" placeholder="First name is fine" autocomplete="name" required aria-describedby="errName"/>
+          <p class="ferr" id="errName"></p>
+        </div>
+        <div>
+          <label class="flbl" for="iemail">Email Address</label>
+          <input class="finp" type="email" id="iemail" placeholder="you@example.com" autocomplete="email" inputmode="email" required aria-describedby="errEmail"/>
+          <p class="ferr" id="errEmail"></p>
+        </div>
+        <div class="fwide">
+          <label class="flbl" for="icomment">Anything else Jalpa should know? <span class="opt">(optional)</span></label>
+          <textarea class="ftxt" id="icomment" placeholder="Context about your situation helps a deeper reading..."></textarea>
+        </div>
+      </div>
+      <div class="fsubrow">
+        <button class="btn btnp" type="submit" id="btnSubmit">Send My Reading Request &nbsp;&#x2726;</button>
+        <div class="senderr" id="sendErr" role="alert" hidden>
+          Your request couldn&rsquo;t be sent just now. Please try again, or
+          <a id="mailFallback" href="#">email it to Jalpa directly</a>.
+        </div>
+        <p class="privacy">Your details are only used to send your reading.</p>
+        <button type="button" class="linkbtn" id="btnRedraw">Draw different cards</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- STEP 4 · SENT -->
+<section class="step" id="s4" aria-labelledby="h2sent">
+  <div class="confbox">
+    <div class="sigil" aria-hidden="true">
+      <svg viewBox="0 0 100 100"><defs><linearGradient id="gg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF3D0"/><stop offset=".5" stop-color="#E8C97A"/><stop offset="1" stop-color="#8B6F2E"/></linearGradient></defs><g class="orbit" fill="none" stroke="#C9A84C" stroke-opacity=".55"><circle cx="50" cy="50" r="46" stroke-dasharray="2 5"/><circle cx="50" cy="50" r="38"/></g><path d="M58 26a25 25 0 1 0 0 48a19 19 0 1 1 0-48z" fill="url(#gg2)"/></svg>
+    </div>
+    <p class="eyebrow" style="margin-bottom:10px">Request received</p>
+    <h2 id="h2sent">Thank You, <span id="confName"></span></h2>
+    <p class="confmsg">Jalpa will sit with your cards and send a personal reading to</p>
+    <div class="emailbadge">&#x2709;&nbsp;<span id="confEmail"></span></div>
+    <div class="confspread" id="confSpread"></div>
+    <p class="confnote">Please check your inbox (and spam folder) within 24&ndash;48 hours.</p>
+    <button class="btn btng" id="btnReset">&#x2726;&nbsp; Ask Another Question</button>
+  </div>
+</section>
+
+</main>
+<script>
+'use strict';
+
+/* =================== CARD DATA =================== */
+/* Image files: 00 = The Fool, 01 = The Magician, 02 = duplicate Magician (unused), 03..78 = High Priestess .. King of Pentacles */
+var CARDS = [
+  {n:'The Fool', u:'cards/00.jpg'},
+  {n:'The Magician', u:'cards/01.jpg'},
+  {n:'The High Priestess', u:'cards/03.jpg'},
+  {n:'The Empress', u:'cards/04.jpg'},
+  {n:'The Emperor', u:'cards/05.jpg'},
+  {n:'The Hierophant', u:'cards/06.jpg'},
+  {n:'The Lovers', u:'cards/07.jpg'},
+  {n:'The Chariot', u:'cards/08.jpg'},
+  {n:'Strength', u:'cards/09.jpg'},
+  {n:'The Hermit', u:'cards/10.jpg'},
+  {n:'Wheel of Fortune', u:'cards/11.jpg'},
+  {n:'Justice', u:'cards/12.jpg'},
+  {n:'The Hanged Man', u:'cards/13.jpg'},
+  {n:'Death', u:'cards/14.jpg'},
+  {n:'Temperance', u:'cards/15.jpg'},
+  {n:'The Devil', u:'cards/16.jpg'},
+  {n:'The Tower', u:'cards/17.jpg'},
+  {n:'The Star', u:'cards/18.jpg'},
+  {n:'The Moon', u:'cards/19.jpg'},
+  {n:'The Sun', u:'cards/20.jpg'},
+  {n:'Judgement', u:'cards/21.jpg'},
+  {n:'The World', u:'cards/22.jpg'},
+  {n:'Ace of Wands', u:'cards/23.jpg'},
+  {n:'Two of Wands', u:'cards/24.jpg'},
+  {n:'Three of Wands', u:'cards/25.jpg'},
+  {n:'Four of Wands', u:'cards/26.jpg'},
+  {n:'Five of Wands', u:'cards/27.jpg'},
+  {n:'Six of Wands', u:'cards/28.jpg'},
+  {n:'Seven of Wands', u:'cards/29.jpg'},
+  {n:'Eight of Wands', u:'cards/30.jpg'},
+  {n:'Nine of Wands', u:'cards/31.jpg'},
+  {n:'Ten of Wands', u:'cards/32.jpg'},
+  {n:'Page of Wands', u:'cards/33.jpg'},
+  {n:'Knight of Wands', u:'cards/34.jpg'},
+  {n:'Queen of Wands', u:'cards/35.jpg'},
+  {n:'King of Wands', u:'cards/36.jpg'},
+  {n:'Ace of Cups', u:'cards/37.jpg'},
+  {n:'Two of Cups', u:'cards/38.jpg'},
+  {n:'Three of Cups', u:'cards/39.jpg'},
+  {n:'Four of Cups', u:'cards/40.jpg'},
+  {n:'Five of Cups', u:'cards/41.jpg'},
+  {n:'Six of Cups', u:'cards/42.jpg'},
+  {n:'Seven of Cups', u:'cards/43.jpg'},
+  {n:'Eight of Cups', u:'cards/44.jpg'},
+  {n:'Nine of Cups', u:'cards/45.jpg'},
+  {n:'Ten of Cups', u:'cards/46.jpg'},
+  {n:'Page of Cups', u:'cards/47.jpg'},
+  {n:'Knight of Cups', u:'cards/48.jpg'},
+  {n:'Queen of Cups', u:'cards/49.jpg'},
+  {n:'King of Cups', u:'cards/50.jpg'},
+  {n:'Ace of Swords', u:'cards/51.jpg'},
+  {n:'Two of Swords', u:'cards/52.jpg'},
+  {n:'Three of Swords', u:'cards/53.jpg'},
+  {n:'Four of Swords', u:'cards/54.jpg'},
+  {n:'Five of Swords', u:'cards/55.jpg'},
+  {n:'Six of Swords', u:'cards/56.jpg'},
+  {n:'Seven of Swords', u:'cards/57.jpg'},
+  {n:'Eight of Swords', u:'cards/58.jpg'},
+  {n:'Nine of Swords', u:'cards/59.jpg'},
+  {n:'Ten of Swords', u:'cards/60.jpg'},
+  {n:'Page of Swords', u:'cards/61.jpg'},
+  {n:'Knight of Swords', u:'cards/62.jpg'},
+  {n:'Queen of Swords', u:'cards/63.jpg'},
+  {n:'King of Swords', u:'cards/64.jpg'},
+  {n:'Ace of Pentacles', u:'cards/65.jpg'},
+  {n:'Two of Pentacles', u:'cards/66.jpg'},
+  {n:'Three of Pentacles', u:'cards/67.jpg'},
+  {n:'Four of Pentacles', u:'cards/68.jpg'},
+  {n:'Five of Pentacles', u:'cards/69.jpg'},
+  {n:'Six of Pentacles', u:'cards/70.jpg'},
+  {n:'Seven of Pentacles', u:'cards/71.jpg'},
+  {n:'Eight of Pentacles', u:'cards/72.jpg'},
+  {n:'Nine of Pentacles', u:'cards/73.jpg'},
+  {n:'Ten of Pentacles', u:'cards/74.jpg'},
+  {n:'Page of Pentacles', u:'cards/75.jpg'},
+  {n:'Knight of Pentacles', u:'cards/76.jpg'},
+  {n:'Queen of Pentacles', u:'cards/77.jpg'},
+  {n:'King of Pentacles', u:'cards/78.jpg'}
+];
+var POSITIONS = ['Past', 'Present', 'Future', 'Outcome'];
+
+/* =================== DELIVERY =================== */
+/* Reading requests are emailed to Jalpa via FormSubmit (https://formsubmit.co).
+   The very first submission sends Jalpa an activation email; click "Activate Form" in it once.
+   After activating, FormSubmit also offers a random alias that can replace the address below. */
+var READER_EMAIL  = 'jalpasp@gmail.com';
+var FORM_ENDPOINT = 'https://formsubmit.co/ajax/' + READER_EMAIL;
+var ROMAN = ['I', 'II', 'III', 'IV'];
+var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* =================== STARFIELD =================== */
+(function () {
+  var cv = document.getElementById('cv');
+  var ctx = cv.getContext('2d');
+  var stars = [], W = 0, H = 0, dpr = 1;
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function makeStars() {
+    stars = [];
+    var n = Math.round(Math.min(220, W * H / 6000));
+    for (var i = 0; i < n; i++) {
+      stars.push({x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.4+0.2, op:Math.random()*0.7+0.15,
+        sp:Math.random()*0.2+0.04, tw:Math.random()*6.28, tws:Math.random()*0.02+0.004, gold:Math.random() < 0.12});
+    }
+  }
+  function frame(animate) {
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      if (animate) { s.tw += s.tws; s.y += s.sp * 0.08; if (s.y > H) { s.y = 0; s.x = Math.random() * W; } }
+      var op = s.op * (0.55 + 0.45 * Math.sin(s.tw));
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.28);
+      ctx.fillStyle = s.gold ? 'rgba(232,201,122,' + op + ')' : 'rgba(255,255,255,' + op + ')';
+      ctx.fill();
+    }
+    if (animate && Math.random() < 0.0012) {
+      var sx = Math.random()*W, sy = Math.random()*H*0.5, len = 90 + Math.random()*80, a = 0.785;
+      var sg = ctx.createLinearGradient(sx, sy, sx+len*Math.cos(a), sy+len*Math.sin(a));
+      sg.addColorStop(0,'rgba(232,201,122,0)'); sg.addColorStop(0.4,'rgba(232,201,122,0.8)'); sg.addColorStop(1,'rgba(232,201,122,0)');
+      ctx.strokeStyle = sg; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx+len*Math.cos(a), sy+len*Math.sin(a)); ctx.stroke();
+    }
+  }
+  function loop() { requestAnimationFrame(loop); frame(true); }
+  resize(); makeStars();
+  window.addEventListener('resize', function () { resize(); makeStars(); if (REDUCED) frame(false); });
+  if (REDUCED) frame(false); else loop();
+}());
+
+/* =================== UTILS =================== */
+function $(id) { return document.getElementById(id); }
+function shuffle(arr) {
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+function cardName(c, long) { return c.inv ? c.n + (long ? ' (Reversed)' : ' (Rev)') : c.n; }
+function cardImg(c) {
+  var img = document.createElement('img');
+  img.src = c.u; img.alt = cardName(c, true); img.decoding = 'async'; img.referrerPolicy = 'no-referrer';
+  if (c.inv) img.classList.add('inv');
+  return img;
+}
+
+function showToast(msg) {
+  var t = $('tst');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function () { t.classList.remove('show'); }, 2600);
+}
+
+function sparkle(x, y) {
+  if (REDUCED) return;
+  var syms = ['✦', '✧', '·', '✦', '+'];
+  for (var i = 0; i < 12; i++) {
+    var el = document.createElement('div');
+    var sx = (Math.random() - 0.5) * 140;
+    var sy = -(Math.random() * 120 + 30);
+    var sr = (Math.random() * 720 - 360) + 'deg';
+    el.style.cssText = 'position:fixed;left:' + x + 'px;top:' + y + 'px;'
+      + 'font-size:' + (Math.random() * 12 + 9) + 'px;'
+      + 'color:hsl(' + (38 + Math.random() * 28) + ',85%,' + (60 + Math.random() * 22) + '%);'
+      + 'pointer-events:none;z-index:9999;'
+      + '--sx:' + sx + 'px;--sy:' + sy + 'px;--sr:' + sr + ';'
+      + 'animation:sprkl ' + (0.5 + Math.random() * 0.8) + 's ease forwards;';
+    el.textContent = syms[Math.floor(Math.random() * syms.length)];
+    document.body.appendChild(el);
+    el.addEventListener('animationend', function () { if (this.parentNode) this.parentNode.removeChild(this); });
+  }
+}
+
+function confetti(n) {
+  if (REDUCED) return;
+  var clrs = ['#C9A84C','#E8C97A','#C9BCFF','#7B2FBE','#ffffff'];
+  for (var i = 0; i < (n || 40); i++) {
+    var el = document.createElement('div');
+    var x = Math.random() * window.innerWidth;
+    var y = window.innerHeight * (0.3 + Math.random() * 0.5);
+    el.style.cssText = 'position:fixed;left:' + x + 'px;top:' + y + 'px;'
+      + 'width:' + (Math.random() * 8 + 4) + 'px;height:' + (Math.random() * 5 + 3) + 'px;'
+      + 'background:' + clrs[Math.floor(Math.random() * clrs.length)] + ';'
+      + 'border-radius:2px;pointer-events:none;z-index:9999;'
+      + 'animation:conffall ' + (0.9 + Math.random() * 1.2) + 's ease forwards ' + (Math.random() * 0.4) + 's;';
+    document.body.appendChild(el);
+    el.addEventListener('animationend', function () { if (this.parentNode) this.parentNode.removeChild(this); });
+  }
+}
+
+/* =================== NAVIGATION =================== */
+var PROGRESS = {s1:'5%', s2:'38%', s3:'72%', s4:'100%'};
+function goStep(id) {
+  document.querySelectorAll('.step').forEach(function (s) { s.classList.remove('active'); });
+  $(id).classList.add('active');
+  document.body.setAttribute('data-step', id);
+  $('pb').style.width = PROGRESS[id] || '5%';
+  var n = parseInt(id.replace('s', ''), 10);
+  for (var i = 1; i <= 4; i++) {
+    var d = $('d' + i);
+    d.classList.remove('on', 'dn');
+    d.removeAttribute('aria-current');
+    if (i === n) { d.classList.add('on'); d.setAttribute('aria-current', 'step'); }
+    else if (i < n) d.classList.add('dn');
+  }
+  window.scrollTo(0, 0);
+  if (id === 's2') startRing(); else stopRing();
+}
+
+/* =================== GLOBAL STATE =================== */
+var question = '';
+var selected = [];
+var deckData = [];
+var cardEls  = [];
+
+/* =================== STEP 1 =================== */
+var taEl   = $('qinp');
+var btnRev = $('btnReveal');
+var cntEl  = $('cntEl');
+
+function updateCounter() {
+  var len = taEl.value.length;
+  cntEl.textContent = len + ' / 500';
+  btnRev.disabled = (taEl.value.trim().length < 3);
+}
+taEl.addEventListener('input', updateCounter);
+taEl.addEventListener('keyup', updateCounter);
+taEl.addEventListener('paste', function () { setTimeout(updateCounter, 50); });
+taEl.addEventListener('keydown', function (e) {
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && !btnRev.disabled) btnRev.click();
+});
+
+document.querySelectorAll('.chip').forEach(function (chip) {
+  chip.addEventListener('click', function () {
+    document.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+    chip.setAttribute('aria-pressed', 'true');
+    taEl.value = chip.getAttribute('data-q');
+    taEl.focus();
+    taEl.setSelectionRange(taEl.value.length, taEl.value.length);
+    updateCounter();
+  });
+});
+
+btnRev.addEventListener('click', function () {
+  question = taEl.value.trim();
+  if (question.length < 3) return;
+  btnRev.innerHTML = '<span class="spin"></span>&nbsp;Shuffling the deck...';
+  btnRev.disabled = true;
+  setTimeout(function () {
+    $('qEcho2').textContent = question;
+    $('qEcho3').textContent = question;
+    buildCarousel();
+    goStep('s2');
+  }, 700);
+});
+
+/* =================== STEP 2: CARD WHEEL =================== */
+var N        = 78;
+var ANGSTEP  = 360 / N;
+var RADIUS   = 380;
+var curAngle = 0, tgtAngle = 0;
+var autoOn   = !REDUCED;
+var isDrag   = false, dragMoved = false;
+var dragX0   = 0, dragA0 = 0;
+var rafId    = null, autoTimer = null, lastPaint = null;
+var ringEl   = $('ring');
+var stageEl  = $('stage');
+
+function calcRadius() {
+  RADIUS = Math.round(Math.max(230, Math.min(420, window.innerWidth * 0.4)));
+  cardEls.forEach(function (w, i) {
+    w.style.transform = 'rotateY(' + (i * ANGSTEP) + 'deg) translateZ(' + RADIUS + 'px)';
+  });
+  lastPaint = null;
+}
+window.addEventListener('resize', calcRadius);
+
+function buildCarousel() {
+  resetTray();
+  $('s2').classList.remove('showcase-mode');
+  selected = []; deckData = []; cardEls = [];
+  curAngle = 0; tgtAngle = 0; autoOn = !REDUCED;
+
+  // Shuffle the deck; roughly 1 in 5 cards lands reversed
+  deckData = CARDS.map(function (c) { return { n: c.n, u: c.u, inv: Math.random() < 0.2, picked: false }; });
+  shuffle(deckData);
+
+  ringEl.innerHTML = '';
+  deckData.forEach(function (card, idx) {
+    var w = document.createElement('div');
+    w.className = 'ring-card';
+    var face = document.createElement('div');
+    face.className = 'rc-flip';
+    w.appendChild(face);
+    ringEl.appendChild(w);
+    cardEls.push(w);
+    w.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (dragMoved) return;
+      pickCard(w, card);
+    });
+  });
+  calcRadius();
+  updateSelUI();
+}
+
+function startRing() { if (!rafId) rafLoop(); }
+function stopRing()  { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
+
+function rafLoop() {
+  rafId = requestAnimationFrame(rafLoop);
+  if (autoOn && !isDrag) tgtAngle -= 0.1;
+  curAngle += (tgtAngle - curAngle) * 0.08;
+  if (lastPaint !== null && Math.abs(curAngle - lastPaint) < 0.01) return;
+  lastPaint = curAngle;
+  ringEl.style.transform = 'translateZ(' + (-RADIUS) + 'px) rotateY(' + curAngle + 'deg)';
+  for (var i = 0; i < cardEls.length; i++) {
+    var worldAng = ((i * ANGSTEP + curAngle) % 360 + 360) % 360;
+    var fromFront = worldAng > 180 ? 360 - worldAng : worldAng;
+    var b = 0.25 + (1 - Math.min(fromFront / 90, 1)) * 0.75;
+    cardEls[i].style.filter = 'brightness(' + b.toFixed(2) + ')';
+    var isFront = fromFront < ANGSTEP / 2 && !deckData[i].picked;
+    if (isFront !== cardEls[i].classList.contains('front')) cardEls[i].classList.toggle('front', isFront);
+  }
+}
+
+function snap() { tgtAngle = Math.round(tgtAngle / ANGSTEP) * ANGSTEP; }
+function pauseAuto() {
+  autoOn = false;
+  clearTimeout(autoTimer);
+  if (!REDUCED) autoTimer = setTimeout(function () { if (selected.length < 4) autoOn = true; }, 4000);
+}
+function spin(dir) { pauseAuto(); snap(); tgtAngle += dir * ANGSTEP; }
+
+function frontIndex() {
+  var best = -1, bestD = 999;
+  for (var i = 0; i < deckData.length; i++) {
+    if (deckData[i].picked) continue;
+    var a = ((i * ANGSTEP + tgtAngle) % 360 + 360) % 360;
+    var d = a > 180 ? 360 - a : a;
+    if (d < bestD) { bestD = d; best = i; }
+  }
+  return best;
+}
+
+(function bindWheel() {
+  function start(cx) { isDrag = true; dragMoved = false; dragX0 = cx; dragA0 = tgtAngle; stageEl.classList.add('drag'); pauseAuto(); }
+  function move(cx)  { if (!isDrag) return; if (Math.abs(cx - dragX0) > 6) dragMoved = true; tgtAngle = dragA0 + (cx - dragX0) * 0.25; }
+  function end()     { if (!isDrag) return; isDrag = false; stageEl.classList.remove('drag'); if (dragMoved) snap(); setTimeout(function () { dragMoved = false; }, 0); }
+  stageEl.addEventListener('mousedown', function (e) { start(e.clientX); });
+  window.addEventListener('mousemove', function (e) { move(e.clientX); });
+  window.addEventListener('mouseup', end);
+  stageEl.addEventListener('touchstart', function (e) { start(e.touches[0].clientX); }, {passive:true});
+  window.addEventListener('touchmove', function (e) { if (isDrag) move(e.touches[0].clientX); }, {passive:true});
+  window.addEventListener('touchend', end);
+  $('rotL').addEventListener('click', function () { spin(1); });
+  $('rotR').addEventListener('click', function () { spin(-1); });
+  $('btnDraw').addEventListener('click', drawFront);
+  document.addEventListener('keydown', function (e) {
+    if (document.body.getAttribute('data-step') !== 's2') return;
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); spin(1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); spin(-1); }
+    else if ((e.key === 'Enter' || e.key === ' ') && !(e.target && e.target.tagName === 'BUTTON')) { e.preventDefault(); drawFront(); }
+  });
+}());
+
+function drawFront() {
+  snap();
+  var i = frontIndex();
+  if (i >= 0) pickCard(cardEls[i], deckData[i]);
+}
+
+function resetTray() {
+  for (var i = 0; i < 4; i++) {
+    var slot = $('slot' + i);
+    slot.className = 'tray-slot' + (i === 0 ? ' next' : '');
+    slot.innerHTML = '<span class="rn">' + ROMAN[i] + '</span><span class="slot-pos">' + POSITIONS[i] + '</span>';
+  }
+}
+
+function renderTrayCard(index, card) {
+  var slot = $('slot' + index);
+  slot.classList.remove('next');
+  slot.classList.add('has-card');
+  slot.querySelector('.rn').remove();
+  var trayCard = document.createElement('div');
+  trayCard.className = 'tray-card';
+  trayCard.appendChild(cardImg(card));
+  slot.appendChild(trayCard);
+  var nx = $('slot' + (index + 1));
+  if (nx) nx.classList.add('next');
+}
+
+function pickCard(w, card) {
+  if (card.picked || selected.length >= 4) return;
+  card.picked = true;
+  w.classList.add('picked');
+  pauseAuto();
+
+  var r = w.getBoundingClientRect();
+  sparkle(r.left + r.width / 2, r.top + r.height / 2);
+
+  selected.push(card);
+  renderTrayCard(selected.length - 1, card);
+  updateSelUI();
+
+  if (selected.length === 4) {
+    autoOn = false;
+    showToast('✦ Your spread is complete ✦');
+    confetti(50);
+    setTimeout(function () { $('s2').classList.add('showcase-mode'); }, 400);
+    setTimeout(function () {
+      renderSelected();
+      goStep('s3');
+      $('s2').classList.remove('showcase-mode');
+    }, 2100);
+  }
+}
+
+function updateSelUI() {
+  var n = selected.length;
+  var msg = n === 0 ? 'Drag or swipe to spin the wheel, then tap a card.'
+          : n < 4 ? n + ' of 4 drawn. Next: your ' + POSITIONS[n] + ' card.'
+          : 'Your spread is complete.';
+  $('selCount').textContent = msg;
+  $('btnDraw').disabled = n >= 4;
+}
+
+/* =================== STEP 3 =================== */
+function renderSelected() {
+  var row = $('selrow');
+  row.innerHTML = '';
+  selected.forEach(function (card, i) {
+    var col = document.createElement('figure');
+    col.className = 'selcol';
+    col.style.animationDelay = (i * 0.12) + 's';
+    var ps = document.createElement('span');
+    ps.className = 'selps';
+    ps.textContent = ROMAN[i] + ' · ' + POSITIONS[i];
+    var wrap = document.createElement('div');
+    wrap.className = 'selimg';
+    wrap.appendChild(cardImg(card));
+    var nm = document.createElement('figcaption');
+    nm.className = 'selnm';
+    nm.textContent = card.n;
+    col.appendChild(ps); col.appendChild(wrap); col.appendChild(nm);
+    if (card.inv) { var rv = document.createElement('span'); rv.className = 'rev'; rv.textContent = 'Reversed'; col.appendChild(rv); }
+    row.appendChild(col);
+  });
+}
+
+function setErr(inputId, errId, msg) {
+  $(inputId).setAttribute('aria-invalid', msg ? 'true' : 'false');
+  $(errId).textContent = msg || '';
+}
+['iname', 'iemail'].forEach(function (id) {
+  $(id).addEventListener('input', function () { setErr(id, id === 'iname' ? 'errName' : 'errEmail', ''); });
+});
+
+$('rform').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var name    = $('iname').value.trim();
+  var email   = $('iemail').value.trim();
+  var comment = $('icomment').value.trim();
+  var ok = true;
+  if (!name) { setErr('iname', 'errName', 'Please tell Jalpa your name.'); ok = false; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setErr('iemail', 'errEmail', 'Please enter a valid email address.'); ok = false; }
+  if (!ok) { (name ? $('iemail') : $('iname')).focus(); return; }
+  var bs = $('btnSubmit');
+  bs.disabled = true;
+  bs.innerHTML = '<span class="spin"></span>&nbsp;Sending...';
+  var cardList = selected.map(function (c, i) { return POSITIONS[i] + ': ' + cardName(c, true); }).join(', ');
+  $('sendErr').hidden = true;
+  if ($('ihoney').value) return; // bot filled the hidden field
+
+  var payload = {
+    _subject: 'New tarot reading request from ' + name,
+    _replyto: email,
+    _template: 'table',
+    _captcha: 'false',
+    Name: name,
+    Email: email,
+    Question: question,
+    Past: selected[0] ? cardName(selected[0], true) : '',
+    Present: selected[1] ? cardName(selected[1], true) : '',
+    Future: selected[2] ? cardName(selected[2], true) : '',
+    Outcome: selected[3] ? cardName(selected[3], true) : '',
+    'Additional context': comment || '(none)'
+  };
+  var controller = window.AbortController ? new AbortController() : null;
+  var timer = setTimeout(function () { if (controller) controller.abort(); }, 15000);
+
+  fetch(FORM_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(payload),
+    signal: controller ? controller.signal : undefined
+  }).then(function (res) {
+    return res.json().catch(function () { return {}; }).then(function (data) {
+      if (!res.ok || data.success === false || data.success === 'false') throw new Error(data.message || ('HTTP ' + res.status));
+    });
+  }).then(function () {
+    clearTimeout(timer);
+    showSent(name, email);
+  }).catch(function (err) {
+    clearTimeout(timer);
+    console.error('Reading request failed:', err);
+    var body = 'Name: ' + name + '\nEmail: ' + email + '\n\nQuestion: ' + question + '\n\nCards: ' + cardList + (comment ? '\n\nContext: ' + comment : '');
+    $('mailFallback').href = 'mailto:' + READER_EMAIL + '?subject=' + encodeURIComponent('Tarot reading request from ' + name) + '&body=' + encodeURIComponent(body);
+    $('sendErr').hidden = false;
+    bs.disabled = false;
+    bs.innerHTML = 'Try Again &nbsp;&#x2726;';
+  });
+});
+
+function showSent(name, email) {
+    $('confName').textContent  = name.split(' ')[0];
+    $('confEmail').textContent = email;
+    var cs = $('confSpread'); cs.innerHTML = '';
+    selected.forEach(function (c, i) {
+      var f = document.createElement('figure');
+      var ci = document.createElement('div'); ci.className = 'ci'; ci.appendChild(cardImg(c));
+      var fc = document.createElement('figcaption'); fc.textContent = POSITIONS[i];
+      f.appendChild(ci); f.appendChild(fc); cs.appendChild(f);
+    });
+    goStep('s4');
+    setTimeout(function () { confetti(60); }, 300);
+}
+
+$('btnRedraw').addEventListener('click', function () {
+  buildCarousel();
+  goStep('s2');
+});
+
+/* =================== RESET =================== */
+$('btnReset').addEventListener('click', function () {
+  question = ''; selected = []; deckData = []; cardEls = [];
+  taEl.value = '';
+  updateCounter();
+  btnRev.innerHTML = 'Draw My Cards &nbsp;&#x2726;';
+  document.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+  $('rform').reset();
+  setErr('iname', 'errName', ''); setErr('iemail', 'errEmail', '');
+  var bs = $('btnSubmit'); bs.disabled = false; bs.innerHTML = 'Send My Reading Request &nbsp;&#x2726;';
+  $('sendErr').hidden = true;
+  goStep('s1');
+});
+document.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+</script>
+</body>
+</html>
