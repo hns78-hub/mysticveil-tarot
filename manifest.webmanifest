@@ -1,0 +1,15 @@
+{
+  "name": "MysticVeil · Tarot by Jalpa",
+  "short_name": "MysticVeil",
+  "description": "Ask your question, draw four tarot cards, and receive a personal reading from Jalpa.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#08061A",
+  "theme_color": "#08061A",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

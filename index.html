@@ -9,6 +9,12 @@
 <meta property="og:title" content="MysticVeil · Tarot Readings by Jalpa"/>
 <meta property="og:description" content="Ask your question, draw four cards, and receive a personal reading from Jalpa."/>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2308061A' stroke='%23C9A84C' stroke-width='2'/%3E%3Cpath d='M38 14a18 18 0 1 0 0 36a14 14 0 1 1 0-36z' fill='%23E8C97A'/%3E%3C/svg%3E"/>
+<link rel="manifest" href="manifest.webmanifest"/>
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="MysticVeil"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet"/>
@@ -531,6 +537,11 @@ function cardImg(c) {
   return img;
 }
 
+/* Haptic feedback when running inside the MysticVeil mobile app (no-op in browsers) */
+function haptic(type) {
+  try { if (window.ReactNativeWebView) window.ReactNativeWebView.postMessage(JSON.stringify({ type: type })); } catch (e) {}
+}
+
 function showToast(msg) {
   var t = $('tst');
   t.textContent = msg;
@@ -787,6 +798,7 @@ function pickCard(w, card) {
 
   var r = w.getBoundingClientRect();
   sparkle(r.left + r.width / 2, r.top + r.height / 2);
+  haptic('HAPTIC_LIGHT');
 
   selected.push(card);
   renderTrayCard(selected.length - 1, card);
@@ -796,6 +808,7 @@ function pickCard(w, card) {
     autoOn = false;
     showToast('✦ Your spread is complete ✦');
     confetti(50);
+    haptic('HAPTIC_SUCCESS');
     setTimeout(function () { $('s2').classList.add('showcase-mode'); }, 400);
     setTimeout(function () {
       renderSelected();
